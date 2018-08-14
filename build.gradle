@@ -3,8 +3,9 @@ version = "0.0.1"
 
 buildscript {
     ext{
-        kotlin_version = '1.2.60'
-        main = 'app'
+        kotlin_version = "1.2.60"
+        main = "app"
+        distDir = "dist"
     }
     repositories {
         mavenCentral()
@@ -14,7 +15,7 @@ buildscript {
     }
 }
 
-apply plugin: 'kotlin2js'
+apply plugin: "kotlin2js"
 
 sourceSets {
     main.kotlin.srcDirs += "src"
@@ -22,7 +23,7 @@ sourceSets {
 
 compileKotlin2Js {
     kotlinOptions{
-        outputFile = "${buildDir}/js/${main}.js"
+        outputFile = "${distDir}/js/${main}.js"
         sourceMap = true
     }
 }
@@ -36,7 +37,7 @@ dependencies {
 }
 
 clean.doFirst() {
-    delete("${buildDir}")
+    delete("${distDir}")
 }
 
 build.doLast() {
@@ -46,7 +47,7 @@ build.doLast() {
             includeEmptyDirs = false
 
             from zipTree(file.absolutePath)
-            into "${buildDir}/js"
+            into "${distDir}/js"
             include { fileTreeElement ->
                 fileTreeElement.path.endsWith(".js") && !fileTreeElement.path.endsWith("meta.js")
             }
@@ -56,12 +57,9 @@ build.doLast() {
     copy {
         includeEmptyDirs = false
         from new File("res")
-        into "${buildDir}"
+        into "${distDir}"
     }
 
-    delete("${buildDir}/js/${main}")
-    delete("${buildDir}/js/${main}.meta.js")
-    delete("${buildDir}/kotlin")
-    delete("${buildDir}/libs")
-    delete("${buildDir}/tmp")
+    delete("${distDir}/js/${main}")
+    delete("${distDir}/js/${main}.meta.js")
 }
