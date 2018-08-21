@@ -8,14 +8,17 @@ buildscript {
         distDir = "dist"
     }
     repositories {
+        mavenLocal()
         mavenCentral()
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.er453r:kotlinjsplugin:0.0.1"
     }
 }
 
 apply plugin: "kotlin2js"
+apply plugin: "kotlinjsplugin"
 
 sourceSets {
     main.kotlin.srcDirs += "src"
@@ -29,6 +32,7 @@ compileKotlin2Js {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
