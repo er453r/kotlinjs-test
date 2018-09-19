@@ -1,20 +1,26 @@
 import org.w3c.dom.HTMLHeadingElement
+import utils.TestComponent
+import utils.appendChild
 import kotlin.browser.document
 
 fun main(args: Array<String>) {
     println("hello derp!")
 
+    val testComponent = TestComponent()
+
     val header = document.createElement("h1") as HTMLHeadingElement
 
-    header.innerHTML = "dynamic lol"
+    header.innerHTML = "H1"
+
+    val header2 = document.createElement("h1") as HTMLHeadingElement
+
+    header2.innerHTML = TestUtils().sayHello("DERP")
 
     document.addEventListener("DOMContentLoaded", {
-        document.body?.appendChild(header)
-
-        val header = document.createElement("h1") as HTMLHeadingElement
-
-        header.innerHTML = TestUtils().sayHello("DERP")
-
-        document.body?.appendChild(header)
+        document.body?.let {
+            it.appendChild(header)
+            it.appendChild(header2)
+            it.appendChild(testComponent)
+        }
     })
 }
